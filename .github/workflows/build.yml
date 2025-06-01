@@ -18,8 +18,8 @@ jobs:
       - name: Configure CMake
         shell: cmd
         run: |
-          cmake -DCMAKE_SYSTEM_PROCESSOR=amd64 -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_BUILD_TYPE=Release -DDynamicBinaryInstrument=OFF -DDOBBY_GENERATE_SHARED=OFF -DPlugin.SymbolResolver=OFF -A x64 -B build64
-          cmake -DCMAKE_SYSTEM_PROCESSOR=x86 -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_BUILD_TYPE=Release -DDynamicBinaryInstrument=OFF -DDOBBY_GENERATE_SHARED=OFF -DPlugin.SymbolResolver=OFF -A Win32 -B build32
+          cmake -DCMAKE_SYSTEM_PROCESSOR=amd64 -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_BUILD_TYPE=Release -DDynamicBinaryInstrument=OFF -DPlugin.SymbolResolver=OFF -A x64 -B build64
+          cmake -DCMAKE_SYSTEM_PROCESSOR=x86 -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_BUILD_TYPE=Release -DDynamicBinaryInstrument=OFF -DPlugin.SymbolResolver=OFF -A Win32 -B build32
 
       - name: Build x86
         run: |
@@ -35,6 +35,8 @@ jobs:
           mkdir build_result
           copy "build32\Release\dobby.lib" "build_result\dobby_x86.lib"
           copy "build64\Release\dobby.lib" "build_result\dobby_x64.lib"
+          copy "build32\Release\dobby.dll" "build_result\dobby_x86.dll"
+          copy "build64\Release\dobby.dll" "build_result\dobby_x64.dll"
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
